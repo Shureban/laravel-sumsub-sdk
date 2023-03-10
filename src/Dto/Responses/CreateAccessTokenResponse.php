@@ -1,6 +1,6 @@
 <?php
 
-namespace Shureban\LaravelSumsubSdk\Dto;
+namespace Shureban\LaravelSumsubSdk\Dto\Responses;
 
 class CreateAccessTokenResponse
 {

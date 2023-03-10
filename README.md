@@ -22,6 +22,10 @@ You can also publish the config file to change implementations (i.e. interface t
 php artisan vendor:publish --provider="Shureban\LaravelSumsubSdk\SumsubServiceProvider" --force
 ```
 
+```shell
+php artisan vendor:publish --provider="Shureban\LaravelObjectMapper\ObjectMapperServiceProvider" --force
+```
+
 ## Usage
 
 ## License

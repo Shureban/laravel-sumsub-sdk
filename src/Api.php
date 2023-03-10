@@ -8,8 +8,8 @@ use Shureban\LaravelObjectMapper\Exceptions\ParseJsonException;
 use Shureban\LaravelObjectMapper\ObjectMapper;
 use Shureban\LaravelSumsubSdk\Attributes\Level;
 use Shureban\LaravelSumsubSdk\Attributes\Signature;
-use Shureban\LaravelSumsubSdk\Dto\CreateAccessTokenResponse;
-use Shureban\LaravelSumsubSdk\Dto\CreateApplicantResponse;
+use Shureban\LaravelSumsubSdk\Dto\Responses\CreateAccessTokenResponse;
+use Shureban\LaravelSumsubSdk\Dto\Responses\CreateApplicantResponse;
 
 class Api
 {
