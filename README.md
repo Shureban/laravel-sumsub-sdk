@@ -19,7 +19,7 @@ Shureban\LaravelSumsubSdk\SumsubServiceProvider::class,
 You can also publish the config file to change implementations (i.e. interface to specific class).
 
 ```shell
-php artisan vendor:publish --provider="Shureban\LaravelSumsubSdk\SumsubServiceProvider"
+php artisan vendor:publish --provider="Shureban\LaravelSumsubSdk\SumsubServiceProvider" --force
 ```
 
 ## Usage
