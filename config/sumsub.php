@@ -1,5 +1,7 @@
 <?php
 
+use Shureban\LaravelSumsubSdk\Attributes\Level;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -34,5 +36,17 @@ return [
 
     'api_key'    => env('SUMSUB_API_KEY'),
     'secret_key' => env('SUMSUB_SECRET_KEY'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Levels
+    |--------------------------------------------------------------------------
+    |
+    | KYC/KYB levels name
+    |
+    */
+
+    'kyc_level' => new Level(env('SUMSUB_KYC_LEVEL')),
+    'kyb_level' => new Level(env('SUMSUB_KYB_LEVEL')),
 
 ];
