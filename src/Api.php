@@ -3,6 +3,7 @@
 namespace Shureban\LaravelSumsubSdk;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
@@ -14,6 +15,7 @@ use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
 use Shureban\LaravelSumsubSdk\Dto\Responses\AccessToken;
 use Shureban\LaravelSumsubSdk\Dto\Responses\ApplicantData;
+use Shureban\LaravelSumsubSdk\Exceptions\ApplicantNotFoundException;
 use Symfony\Component\HttpFoundation\Request as LaravelRequest;
 
 class Api
@@ -68,6 +70,7 @@ class Api
      * @param GetApplicantDataRequest $request
      *
      * @return ApplicantData
+     * @throws ApplicantNotFoundException
      * @throws GuzzleException
      * @throws ParseJsonException
      */
@@ -78,8 +81,14 @@ class Api
             $url = $this->router->getApplicantDataByApplicantId($request->applicantId);
         }
 
-        $request = new Request(LaravelRequest::METHOD_GET, $url);
-        $body    = $this->sendRequest($request)->getBody()->getContents();
+        $httpRequest = new Request(LaravelRequest::METHOD_GET, $url);
+
+        try {
+            $body = $this->sendRequest($httpRequest)->getBody()->getContents();
+        }
+        catch (ClientException $e) {
+            throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious());
+        }
 
         return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
     }
