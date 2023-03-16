@@ -2,7 +2,7 @@
 
 namespace Shureban\LaravelSumsubSdk\Dto\Responses;
 
-class CreateAccessTokenResponse
+class AccessToken
 {
     public string $token;
     public string $userId;
