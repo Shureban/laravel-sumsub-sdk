@@ -4,12 +4,17 @@ namespace Shureban\LaravelSumsubSdk;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
 use Shureban\LaravelObjectMapper\Exceptions\ParseJsonException;
 use Shureban\LaravelObjectMapper\ObjectMapper;
-use Shureban\LaravelSumsubSdk\Attributes\Level;
 use Shureban\LaravelSumsubSdk\Attributes\Signature;
-use Shureban\LaravelSumsubSdk\Dto\Responses\CreateAccessTokenResponse;
-use Shureban\LaravelSumsubSdk\Dto\Responses\CreateApplicantResponse;
+use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
+use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
+use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
+use Shureban\LaravelSumsubSdk\Dto\Responses\AccessToken;
+use Shureban\LaravelSumsubSdk\Dto\Responses\ApplicantData;
+use Symfony\Component\HttpFoundation\Request as LaravelRequest;
 
 class Api
 {
@@ -20,69 +25,63 @@ class Api
     {
         $this->router = new Router();
         $this->client = new Client([
-            'base_uri' => config('sumsub.domain'),
+            'base_uri'        => config('sumsub.domain'),
+            'timeout'         => config('sumsub.timeout'),
+            'connect_timeout' => config('sumsub.timeout'),
         ]);
     }
 
     /**
-     * @param Level  $level
-     * @param string $externalUserId
+     * @param CreateAccessTokenRequest $request
      *
-     * @return CreateApplicantResponse
+     * @return AccessToken
      * @throws GuzzleException
      * @throws ParseJsonException
      */
-    public function createApplicant(Level $level, string $externalUserId): CreateApplicantResponse
+    public function createAccessToken(CreateAccessTokenRequest $request): AccessToken
     {
-        $time    = time();
-        $url     = sprintf('%s?levelName=%s', $this->router->createApplicant(), $level);
-        $body    = json_encode(['externalUserId' => $externalUserId]);
-        $request = $this->client->post($url, [
-            'headers'         => [
-                'Content-Type'     => 'application/json',
-                'X-App-Token'      => config('sumsub.api_key'),
-                'X-App-Access-Sig' => (string)new Signature($url, $time, 'POST', $body),
-                'X-App-Access-Ts'  => $time,
-            ],
-            'timeout'         => config('sumsub.timeout'),
-            'connect_timeout' => config('sumsub.timeout'),
-            'body'            => $body,
-        ]);
-        $body    = $request->getBody()->getContents();
+        $url     = sprintf('%s?%s', $this->router->createAccessToken(), $request->queryParams());
+        $request = new Request(LaravelRequest::METHOD_POST, $url);
+        $body    = $this->sendRequest($request)->getBody()->getContents();
 
-        return (new ObjectMapper(new CreateApplicantResponse()))->mapFromJson($body);
+        return (new ObjectMapper(new AccessToken()))->mapFromJson($body);
     }
 
     /**
-     * @param Level  $level
-     * @param string $externalUserId
+     * @param CreateApplicantRequest $request
      *
-     * @return CreateAccessTokenResponse
+     * @return ApplicantData
      * @throws GuzzleException
      * @throws ParseJsonException
      */
-    public function createAccessToken(Level $level, string $externalUserId): CreateAccessTokenResponse
+    public function createApplicant(CreateApplicantRequest $request): ApplicantData
     {
-        $time    = time();
-        $url     = sprintf('%s?userId=%s&levelName=%s', $this->router->createAccessToken(), $externalUserId, $level);
-        $request = $this->client->post($url, [
-            'headers'         => [
-                'Content-Type'     => 'application/json',
-                'X-App-Token'      => config('sumsub.api_key'),
-                'X-App-Access-Sig' => (string)new Signature($url, $time, 'POST'),
-                'X-App-Access-Ts'  => $time,
-            ],
-            'timeout'         => config('sumsub.timeout'),
-            'connect_timeout' => config('sumsub.timeout'),
-        ]);
-        $body    = $request->getBody()->getContents();
+        $url     = sprintf('%s?%s', $this->router->createApplicant(), $request->queryParams());
+        $body    = json_encode($request->body());
+        $request = new Request(LaravelRequest::METHOD_POST, $url, [], $body);
+        $body    = $this->sendRequest($request)->getBody()->getContents();
 
-        return (new ObjectMapper(new CreateAccessTokenResponse()))->mapFromJson($body);
+        return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
     }
 
-    public function addDocument(): void
+    /**
+     * @param GetApplicantDataRequest $request
+     *
+     * @return ApplicantData
+     * @throws GuzzleException
+     * @throws ParseJsonException
+     */
+    public function getApplicantData(GetApplicantDataRequest $request): ApplicantData
     {
+        $url = $this->router->getApplicantDataByExternalUserId($request->externalUserId);
+        if ($request->applicantId) {
+            $url = $this->router->getApplicantDataByApplicantId($request->applicantId);
+        }
 
+        $request = new Request(LaravelRequest::METHOD_GET, $url);
+        $body    = $this->sendRequest($request)->getBody()->getContents();
+
+        return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
     }
 
     public function getApplicantStatus(): void
@@ -90,7 +89,7 @@ class Api
 
     }
 
-    public function getApplicantData(): void
+    public function addDocument(): void
     {
 
     }
@@ -100,9 +99,24 @@ class Api
 
     }
 
-    private function sendRequest(): void
+    /**
+     * @param Request $request
+     *
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    private function sendRequest(Request $request): ResponseInterface
     {
+        $time      = time();
+        $url       = trim(sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery()), '?');
+        $signature = (string)new Signature($url, $time, $request->getMethod(), (string)$request->getBody());
 
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withHeader('X-App-Token', config('sumsub.api_key'));
+        $request = $request->withHeader('X-App-Access-Sig', $signature);
+        $request = $request->withHeader('X-App-Access-Ts', $time);
+
+        return $this->client->send($request);
     }
 }
 

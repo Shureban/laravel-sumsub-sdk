@@ -1,6 +1,7 @@
 <?php
 
 use Shureban\LaravelSumsubSdk\Attributes\Level;
+use Shureban\LaravelSumsubSdk\Enums\ApplicantType;
 
 return [
     /*
@@ -46,7 +47,16 @@ return [
     |
     */
 
-    'kyc_level' => new Level(env('SUMSUB_KYC_LEVEL')),
-    'kyb_level' => new Level(env('SUMSUB_KYB_LEVEL')),
+    ApplicantType::Individual->value => new Level(env('SUMSUB_KYC_LEVEL')),
+    ApplicantType::Company->value    => new Level(env('SUMSUB_KYB_LEVEL')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other options
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'access_token_life_time' => 60,
 
 ];

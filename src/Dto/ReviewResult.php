@@ -1,6 +1,6 @@
 <?php
 
-namespace Shureban\LaravelSumsubSdk\Dto\Webhooks;
+namespace Shureban\LaravelSumsubSdk\Dto;
 
 use Shureban\LaravelSumsubSdk\Enums\RejectLabel;
 use Shureban\LaravelSumsubSdk\Enums\ReviewAnswer;

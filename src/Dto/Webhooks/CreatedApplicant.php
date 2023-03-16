@@ -4,6 +4,7 @@ namespace Shureban\LaravelSumsubSdk\Dto\Webhooks;
 
 use DateTime;
 use Shureban\LaravelSumsubSdk\Attributes\Level;
+use Shureban\LaravelSumsubSdk\Dto\ReviewResult;
 use Shureban\LaravelSumsubSdk\Enums\ApplicantType;
 use Shureban\LaravelSumsubSdk\Enums\ReviewStatus;
 use Shureban\LaravelSumsubSdk\Enums\WebhookType;
