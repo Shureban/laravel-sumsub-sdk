@@ -16,4 +16,15 @@ class GetApplicantDataRequest extends SumsubRequest
         $this->externalUserId = $externalUserId;
         $this->applicantId    = $applicantId;
     }
+
+    /**
+     * @return string
+     */
+    public function queryParams(): string
+    {
+        return http_build_query([
+            'externalUserId' => $this->externalUserId,
+            'applicantId'    => $this->applicantId,
+        ]);
+    }
 }
