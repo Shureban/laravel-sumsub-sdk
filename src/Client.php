@@ -2,31 +2,25 @@
 
 namespace Shureban\LaravelSumsubSdk;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
-use Shureban\LaravelObjectMapper\Exceptions\ParseJsonException;
-use Shureban\LaravelObjectMapper\ObjectMapper;
 use Shureban\LaravelSumsubSdk\Attributes\Signature;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
-use Shureban\LaravelSumsubSdk\Dto\Responses\AccessToken;
-use Shureban\LaravelSumsubSdk\Dto\Responses\ApplicantData;
-use Shureban\LaravelSumsubSdk\Exceptions\ApplicantNotFoundException;
 use Symfony\Component\HttpFoundation\Request as LaravelRequest;
 
-class Api
+class Client
 {
-    private Client $client;
-    private Router $router;
+    private GuzzleClient $client;
+    private Router       $router;
 
     public function __construct()
     {
         $this->router = new Router();
-        $this->client = new Client([
+        $this->client = new GuzzleClient([
             'base_uri'        => config('sumsub.domain'),
             'timeout'         => config('sumsub.timeout'),
             'connect_timeout' => config('sumsub.timeout'),
@@ -36,45 +30,39 @@ class Api
     /**
      * @param CreateAccessTokenRequest $request
      *
-     * @return AccessToken
+     * @return string
      * @throws GuzzleException
-     * @throws ParseJsonException
      */
-    public function createAccessToken(CreateAccessTokenRequest $request): AccessToken
+    public function createAccessToken(CreateAccessTokenRequest $request): string
     {
         $url     = sprintf('%s?%s', $this->router->createAccessToken(), $request->queryParams());
         $request = new Request(LaravelRequest::METHOD_POST, $url);
-        $body    = $this->sendRequest($request)->getBody()->getContents();
 
-        return (new ObjectMapper(new AccessToken()))->mapFromJson($body);
+        return $this->sendRequest($request)->getBody()->getContents();
     }
 
     /**
      * @param CreateApplicantRequest $request
      *
-     * @return ApplicantData
+     * @return string
      * @throws GuzzleException
-     * @throws ParseJsonException
      */
-    public function createApplicant(CreateApplicantRequest $request): ApplicantData
+    public function createApplicant(CreateApplicantRequest $request): string
     {
         $url     = sprintf('%s?%s', $this->router->createApplicant(), $request->queryParams());
         $body    = json_encode($request->body());
         $request = new Request(LaravelRequest::METHOD_POST, $url, [], $body);
-        $body    = $this->sendRequest($request)->getBody()->getContents();
 
-        return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
+        return $this->sendRequest($request)->getBody()->getContents();
     }
 
     /**
      * @param GetApplicantDataRequest $request
      *
-     * @return ApplicantData
-     * @throws ApplicantNotFoundException
+     * @return string
      * @throws GuzzleException
-     * @throws ParseJsonException
      */
-    public function getApplicantData(GetApplicantDataRequest $request): ApplicantData
+    public function getApplicantData(GetApplicantDataRequest $request): string
     {
         $url = $this->router->getApplicantDataByExternalUserId($request->externalUserId);
         if ($request->applicantId) {
@@ -83,14 +71,7 @@ class Api
 
         $httpRequest = new Request(LaravelRequest::METHOD_GET, $url);
 
-        try {
-            $body = $this->sendRequest($httpRequest)->getBody()->getContents();
-        }
-        catch (ClientException $e) {
-            throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious());
-        }
-
-        return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
+        return $this->sendRequest($httpRequest)->getBody()->getContents();
     }
 
     public function getApplicantStatus(): void
