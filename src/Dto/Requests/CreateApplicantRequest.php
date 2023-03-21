@@ -9,6 +9,10 @@ class CreateApplicantRequest extends SumsubRequest
     public string $externalUserId;
     public Level  $levelName;
 
+    /**
+     * @param Level  $levelName
+     * @param string $externalUserId
+     */
     public function __construct(Level $levelName, string $externalUserId)
     {
         $this->levelName      = $levelName;
@@ -21,7 +25,7 @@ class CreateApplicantRequest extends SumsubRequest
     public function queryParams(): string
     {
         return http_build_query([
-            'levelName' => $this->levelName,
+            'levelName' => (string)$this->levelName,
         ]);
     }
 

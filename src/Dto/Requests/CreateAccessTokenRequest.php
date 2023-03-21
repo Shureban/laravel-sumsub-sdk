@@ -17,4 +17,17 @@ class CreateAccessTokenRequest extends SumsubRequest
         $this->userId    = $userId;
         $this->ttlInSecs = config('sumsub.access_token_life_time');
     }
+
+    /**
+     * @return string
+     */
+    public function queryParams(): string
+    {
+        return http_build_query([
+            'ttlInSecs'        => $this->ttlInSecs,
+            'userId'           => $this->userId,
+            'levelName'        => (string)$this->levelName,
+            'externalActionId' => $this->externalActionId,
+        ]);
+    }
 }
