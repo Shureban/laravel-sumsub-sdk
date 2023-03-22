@@ -9,5 +9,5 @@ enum ReviewStatus: string
     case Prechecked = 'prechecked';
     case Queued     = 'queued';
     case Completed  = 'completed';
-    case OnHold     = 'on_hold';
+    case OnHold     = 'onHold';
 }
