@@ -5,6 +5,7 @@ namespace Shureban\LaravelSumsubSdk\Enums;
 enum IdDocType: string
 {
     case IdCard                         = 'ID_CARD';
+    case CompanyDoc                     = 'COMPANY_DOC';
     case Passport                       = 'PASSPORT';
     case Drivers                        = 'DRIVERS';
     case ResidencePermit                = 'RESIDENCE_PERMIT';
