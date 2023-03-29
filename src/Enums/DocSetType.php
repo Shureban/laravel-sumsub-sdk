@@ -16,4 +16,5 @@ enum DocSetType: string
     case ProofOfResidence2 = 'PROOF_OF_RESIDENCE2';
     case Selfie            = 'SELFIE';
     case Selfie2           = 'SELFIE2';
+    case Company           = 'COMPANY';
 }

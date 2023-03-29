@@ -57,6 +57,6 @@ return [
     |
     */
 
-    'access_token_life_time' => 60,
+    'access_token_life_time' => 600,
 
 ];
