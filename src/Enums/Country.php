@@ -11,6 +11,7 @@ enum Country: string
     case ALA = 'ALA';
     case ALB = 'ALB';
     case AND = 'AND';
+    case ANT = 'ANT';
     case ARE = 'ARE';
     case ARG = 'ARG';
     case ARM = 'ARM';
