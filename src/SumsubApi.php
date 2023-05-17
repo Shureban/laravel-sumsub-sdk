@@ -11,6 +11,7 @@ use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
 use Shureban\LaravelSumsubSdk\Dto\Responses\AccessToken;
 use Shureban\LaravelSumsubSdk\Dto\Responses\ApplicantData;
 use Shureban\LaravelSumsubSdk\Exceptions\ApplicantNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class SumsubApi
 {
@@ -54,7 +55,7 @@ class SumsubApi
      *
      * @return ApplicantData
      * @throws ApplicantNotFoundException
-     * @throws ParseJsonException
+     * @throws ParseJsonException|GuzzleException
      */
     public function getApplicantData(GetApplicantDataRequest $request): ApplicantData
     {
@@ -62,7 +63,10 @@ class SumsubApi
             $body = $this->client->getApplicantData($request);
         }
         catch (GuzzleException $e) {
-            throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious());
+            match ($e->getCode()) {
+                Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
+                default                  => throw new $e,
+            };
         }
 
         return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
