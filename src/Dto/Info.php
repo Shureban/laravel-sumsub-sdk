@@ -6,7 +6,8 @@ use Shureban\LaravelSumsubSdk\Enums\Country;
 
 class Info
 {
-    public Country $country;
+    public CompanyInfo $companyInfo;
+    public ?Country    $country;
     /** @var IdDoc[] */
     public array $idDocs = [];
 }
