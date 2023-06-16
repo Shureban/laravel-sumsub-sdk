@@ -2,7 +2,9 @@
 
 namespace Shureban\LaravelSumsubSdk\Dto\Requests;
 
-class GetApplicantDataRequest extends SumsubRequest
+use Shureban\LaravelSumsubSdk\Dto\Requests\Interfaces\ApplicantRequest;
+
+class GetApplicantDataRequest extends SumsubRequest implements ApplicantRequest
 {
     public string  $externalUserId;
     public ?string $applicantId;
@@ -26,5 +28,15 @@ class GetApplicantDataRequest extends SumsubRequest
             'externalUserId' => $this->externalUserId,
             'applicantId'    => $this->applicantId,
         ]);
+    }
+
+    public function getApplicantId(): ?string
+    {
+        return $this->applicantId;
+    }
+
+    public function getExternalUserId(): ?string
+    {
+        return $this->externalUserId;
     }
 }

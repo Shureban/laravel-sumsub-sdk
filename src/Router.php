@@ -11,6 +11,14 @@ class Router
     {
         return '/resources/applicants';
     }
+    
+    /**
+     * @return string
+     */
+    public function changingTopLevelInfo(): string
+    {
+        return '/resources/applicants';
+    }
 
     /**
      * @return string

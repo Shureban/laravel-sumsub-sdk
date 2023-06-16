@@ -5,6 +5,7 @@ namespace Shureban\LaravelSumsubSdk;
 use GuzzleHttp\Exception\GuzzleException;
 use Shureban\LaravelObjectMapper\Exceptions\ParseJsonException;
 use Shureban\LaravelObjectMapper\ObjectMapper;
+use Shureban\LaravelSumsubSdk\Dto\Requests\ChangingTopLevelInfoRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
@@ -61,6 +62,29 @@ class SumsubApi
     {
         try {
             $body = $this->client->getApplicantData($request);
+        }
+        catch (GuzzleException $e) {
+            match ($e->getCode()) {
+                Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
+                default                  => throw new $e,
+            };
+        }
+
+        return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
+    }
+
+    /**
+     * @param ChangingTopLevelInfoRequest $request
+     *
+     * @return ApplicantData
+     * @throws ApplicantNotFoundException
+     * @throws GuzzleException
+     * @throws ParseJsonException
+     */
+    public function changingTopLevelInfo(ChangingTopLevelInfoRequest $request): ApplicantData
+    {
+        try {
+            $body = $this->client->changingTopLevelInfo($request);
         }
         catch (GuzzleException $e) {
             match ($e->getCode()) {

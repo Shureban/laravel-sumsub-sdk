@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Shureban\LaravelSumsubSdk\Attributes\Signature;
+use Shureban\LaravelSumsubSdk\Dto\Requests\ChangingTopLevelInfoRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
@@ -72,6 +73,21 @@ class Client
         $httpRequest = new Request(LaravelRequest::METHOD_GET, $url);
 
         return $this->sendRequest($httpRequest)->getBody()->getContents();
+    }
+
+    /**
+     * @param ChangingTopLevelInfoRequest $request
+     *
+     * @return string
+     * @throws GuzzleException
+     */
+    public function changingTopLevelInfo(ChangingTopLevelInfoRequest $request): string
+    {
+        $url     = $this->router->changingTopLevelInfo();
+        $body    = json_encode($request->body());
+        $request = new Request(LaravelRequest::METHOD_PATCH, $url, [], $body);
+
+        return $this->sendRequest($request)->getBody()->getContents();
     }
 
     public function getApplicantStatus(): void
