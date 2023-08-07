@@ -11,7 +11,7 @@ class Router
     {
         return '/resources/applicants';
     }
-    
+
     /**
      * @return string
      */
@@ -36,6 +36,16 @@ class Router
     public function getApplicantDataByApplicantId(string $applicantId): string
     {
         return sprintf('/resources/applicants/%s/one', $applicantId);
+    }
+
+    /**
+     * @param string $applicantId
+     *
+     * @return string
+     */
+    public function resetApplicant(string $applicantId): string
+    {
+        return sprintf('/resources/applicants/%s/reset', $applicantId);
     }
 
     /**
