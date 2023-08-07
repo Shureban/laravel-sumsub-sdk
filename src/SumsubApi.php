@@ -9,8 +9,10 @@ use Shureban\LaravelSumsubSdk\Dto\Requests\ChangingTopLevelInfoRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
+use Shureban\LaravelSumsubSdk\Dto\Requests\ResetApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Responses\AccessToken;
 use Shureban\LaravelSumsubSdk\Dto\Responses\ApplicantData;
+use Shureban\LaravelSumsubSdk\Dto\Responses\OkResponse;
 use Shureban\LaravelSumsubSdk\Exceptions\ApplicantNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -94,6 +96,29 @@ class SumsubApi
         }
 
         return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
+    }
+
+    /**
+     * @param ResetApplicantRequest $request
+     *
+     * @return OkResponse
+     * @throws ApplicantNotFoundException
+     * @throws GuzzleException
+     * @throws ParseJsonException
+     */
+    public function resetApplicant(ResetApplicantRequest $request): OkResponse
+    {
+        try {
+            $body = $this->client->resetApplicant($request);
+        }
+        catch (GuzzleException $e) {
+            match ($e->getCode()) {
+                Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
+                default                  => throw new $e,
+            };
+        }
+
+        return (new ObjectMapper(new OkResponse()))->mapFromJson($body);
     }
 
     public function getApplicantStatus(): void

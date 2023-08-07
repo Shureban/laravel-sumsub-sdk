@@ -11,6 +11,7 @@ use Shureban\LaravelSumsubSdk\Dto\Requests\ChangingTopLevelInfoRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateAccessTokenRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\CreateApplicantRequest;
 use Shureban\LaravelSumsubSdk\Dto\Requests\GetApplicantDataRequest;
+use Shureban\LaravelSumsubSdk\Dto\Requests\ResetApplicantRequest;
 use Symfony\Component\HttpFoundation\Request as LaravelRequest;
 
 class Client
@@ -86,6 +87,20 @@ class Client
         $url     = $this->router->changingTopLevelInfo();
         $body    = json_encode($request->body());
         $request = new Request(LaravelRequest::METHOD_PATCH, $url, [], $body);
+
+        return $this->sendRequest($request)->getBody()->getContents();
+    }
+
+    /**
+     * @param ResetApplicantRequest $request
+     *
+     * @return string
+     * @throws GuzzleException
+     */
+    public function resetApplicant(ResetApplicantRequest $request): string
+    {
+        $url     = $this->router->resetApplicant($request->applicantId);
+        $request = new Request(LaravelRequest::METHOD_POST, $url, []);
 
         return $this->sendRequest($request)->getBody()->getContents();
     }
