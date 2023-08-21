@@ -18,4 +18,5 @@ enum WebhookType: string
     case ApplicantActionReviewed          = 'applicantActionReviewed';
     case ApplicantActionOnHold            = 'applicantActionOnHold';
     case ApplicantTravelRuleStatusChanged = 'applicantTravelRuleStatusChanged';
+    case ApplicantWorkflowCompleted       = 'applicantWorkflowCompleted';
 }
