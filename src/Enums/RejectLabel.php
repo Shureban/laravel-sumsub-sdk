@@ -42,6 +42,7 @@ enum RejectLabel: string
     case Screenshots                        = 'SCREENSHOTS';
     case BlackAndWhite                      = 'BLACK_AND_WHITE';
     case IncompatibleLanguage               = 'INCOMPATIBLE_LANGUAGE';
+    case IncorrectSocialNumber              = 'INCORRECT_SOCIAL_NUMBER';
     case ExpirationDate                     = 'EXPIRATION_DATE';
     case UnfilledId                         = 'UNFILLED_ID';
     case BadSelfie                          = 'BAD_SELFIE';
