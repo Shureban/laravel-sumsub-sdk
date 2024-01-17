@@ -2,12 +2,10 @@
 
 namespace Shureban\LaravelSumsubSdk\Dto;
 
-use stdClass;
-
 class Questionnaire
 {
     public string $id;
     public float  $score;
-    /** @var stdClass[] */
+    /** @var object[] */
     public array $sections;
 }
