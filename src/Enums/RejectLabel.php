@@ -67,4 +67,3 @@ enum RejectLabel: string
     case ConnectionInterrupted               = 'CONNECTION_INTERRUPTED';
     case CompanyNotValidatedBeneficialOwners = 'COMPANY_NOT_VALIDATED_BENEFICIAL_OWNERS';
 }
-
