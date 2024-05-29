@@ -67,4 +67,5 @@ enum RejectLabel: string
     case ConnectionInterrupted               = 'CONNECTION_INTERRUPTED';
     case CompanyNotValidatedBeneficialOwners = 'COMPANY_NOT_VALIDATED_BENEFICIAL_OWNERS';
     case CompanyNotDefinedOwnershipStructure = 'COMPANY_NOT_DEFINED_OWNERSHIP_STRUCTURE';
+    case UnsuitableDocument                  = 'UNSUITABLE_DOCUMENT';
 }
