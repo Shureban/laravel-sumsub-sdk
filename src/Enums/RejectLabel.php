@@ -69,4 +69,5 @@ enum RejectLabel: string
     case CompanyNotDefinedOwnershipStructure = 'COMPANY_NOT_DEFINED_OWNERSHIP_STRUCTURE';
     case UnsuitableDocument                  = 'UNSUITABLE_DOCUMENT';
     case CompanyIncorrectData                = 'COMPANY_INCORRECT_DATA';
+    case MoreDocumentsRequired               = 'MORE_DOCUMENTS_REQUIRED';
 }
