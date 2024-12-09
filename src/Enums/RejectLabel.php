@@ -70,4 +70,5 @@ enum RejectLabel: string
     case UnsuitableDocument                  = 'UNSUITABLE_DOCUMENT';
     case CompanyIncorrectData                = 'COMPANY_INCORRECT_DATA';
     case MoreDocumentsRequired               = 'MORE_DOCUMENTS_REQUIRED';
+    case DigitalDocument                     = 'DIGITAL_DOCUMENT';
 }
