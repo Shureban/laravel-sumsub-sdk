@@ -10,6 +10,9 @@ class Agreement
     public ?string $link    = null;
     public mixed   $content = null;
     /** @var string[] */
-    public array    $targets = [];
+    public array $targets = [];
+    /** @var string[] */
+    public array    $recordIds = [];
     public DateTime $createdAt;
+    public DateTime $acceptedAt;
 }

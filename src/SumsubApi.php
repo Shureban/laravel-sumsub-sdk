@@ -72,6 +72,8 @@ class SumsubApi
             };
         }
 
+        //        dd($body);
+
         return (new ObjectMapper(new ApplicantData()))->mapFromJson($body);
     }
 

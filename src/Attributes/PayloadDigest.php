@@ -22,6 +22,6 @@ class PayloadDigest implements Stringable
 
     public function __toString(): string
     {
-        return hash_hmac('sha1', $this->request->getContent(), $this->webhookSecretToken);
+        return hash_hmac(config('sumsub.signature_algorithm'), $this->request->getContent(), $this->webhookSecretToken);
     }
 }

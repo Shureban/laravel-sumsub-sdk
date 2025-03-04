@@ -17,4 +17,6 @@ enum DocSetType: string
     case Selfie            = 'SELFIE';
     case Selfie2           = 'SELFIE2';
     case Company           = 'COMPANY';
+    case CompanyData       = 'COMPANY_DATA';
+    case CompanyDocuments  = 'COMPANY_DOCUMENTS';
 }

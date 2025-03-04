@@ -16,29 +16,30 @@ use stdClass;
 
 class ApplicantData
 {
-    public string        $id;
-    public string        $key;
-    public ApplicantType $type;
-    public string        $clientId;
-    public string        $inspectionId;
-    public string        $externalUserId;
-    public string        $applicantPlatform;
-    public ?string       $sourceKey = null;
-    public ?string       $authCode  = null;
-    public ?string       $email     = null;
-    public ?string       $phone     = null;
-    public ?string       $lang      = null;
-    public ?Country      $ipCountry = null;
-    /** @var MetaData[] */
-    public array          $metadata       = [];
-    public ?Agreement     $agreement      = null;
+    public string         $id;
+    public string         $createdBy;
+    public string         $key;
+    public string         $clientId;
+    public string         $inspectionId;
+    public string         $externalUserId;
+    public string         $applicantPlatform;
+    public ApplicantType  $type;
     public ?Info          $info           = null;
     public ?FixedInfo     $fixedInfo      = null;
+    public ?Country       $ipCountry      = null;
+    public ?Agreement     $agreement      = null;
     public ?RequiredIdDoc $requiredIdDocs = null;
-    public Review         $review;
+    public DateTime       $createdAt;
+    public ?string        $sourceKey      = null;
+    public ?string        $authCode       = null;
+    public ?string        $email          = null;
+    public ?string        $phone          = null;
+    public ?string        $lang           = null;
+    /** @var MetaData[] */
+    public array  $metadata = [];
+    public Review $review;
     /** @var Questionnaire[] */
     public array $questionnaires = [];
     /** @var stdClass[] */
-    public array    $inspectionMetadata = [];
-    public DateTime $createdAt;
+    public array $inspectionMetadata = [];
 }
