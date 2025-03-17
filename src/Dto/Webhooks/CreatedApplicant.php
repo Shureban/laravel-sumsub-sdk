@@ -6,7 +6,6 @@ use DateTime;
 use Shureban\LaravelSumsubSdk\Attributes\Level;
 use Shureban\LaravelSumsubSdk\Enums\ApplicantType;
 use Shureban\LaravelSumsubSdk\Enums\ReviewStatus;
-use Shureban\LaravelSumsubSdk\Enums\WebhookType;
 
 class CreatedApplicant
 {
@@ -17,7 +16,7 @@ class CreatedApplicant
     public Level         $levelName;
     public bool          $sandboxMode;
     public string        $externalUserId;
-    public WebhookType   $type;
+    public string        $type;
     public ReviewStatus  $reviewStatus;
     public DateTime      $createdAt;
     public DateTime      $createdAtMs;
