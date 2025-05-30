@@ -10,7 +10,7 @@ class ReviewResult
     /** @var string[] */
     public array             $rejectLabels     = [];
     public ?ReviewRejectType $reviewRejectType = null;
-    public ReviewAnswer      $reviewAnswer;
+    public ?ReviewAnswer     $reviewAnswer     = null;
     public string            $moderationComment;
     public string            $clientComment;
 }
