@@ -20,9 +20,9 @@ class SumsubApi
 {
     private Client $client;
 
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, string $secretKey)
     {
-        $this->client = new Client($apiKey);
+        $this->client = new Client($apiKey, $secretKey);
     }
 
     /**

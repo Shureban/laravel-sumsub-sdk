@@ -19,12 +19,14 @@ class Client
     private GuzzleClient $client;
     private Router       $router;
     private string       $apiKey;
+    private string       $secretKey;
 
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, string $secretKey)
     {
-        $this->apiKey = $apiKey;
-        $this->router = new Router();
-        $this->client = new GuzzleClient([
+        $this->apiKey    = $apiKey;
+        $this->secretKey = $secretKey;
+        $this->router    = new Router();
+        $this->client    = new GuzzleClient([
             'base_uri'        => config('sumsub.domain'),
             'timeout'         => config('sumsub.timeout'),
             'connect_timeout' => config('sumsub.timeout'),
@@ -132,7 +134,7 @@ class Client
     {
         $time      = time();
         $url       = trim(sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery()), '?');
-        $signature = (string)new Signature($url, $time, $request->getMethod(), (string)$request->getBody());
+        $signature = (string)new Signature($this->secretKey, $url, $time, $request->getMethod(), (string)$request->getBody());
 
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withHeader('X-App-Token', $this->apiKey);
