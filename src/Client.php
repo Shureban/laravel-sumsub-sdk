@@ -18,9 +18,11 @@ class Client
 {
     private GuzzleClient $client;
     private Router       $router;
+    private string       $apiKey;
 
-    public function __construct()
+    public function __construct(string $apiKey)
     {
+        $this->apiKey = $apiKey;
         $this->router = new Router();
         $this->client = new GuzzleClient([
             'base_uri'        => config('sumsub.domain'),
@@ -133,7 +135,7 @@ class Client
         $signature = (string)new Signature($url, $time, $request->getMethod(), (string)$request->getBody());
 
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request = $request->withHeader('X-App-Token', config('sumsub.api_key'));
+        $request = $request->withHeader('X-App-Token', $this->apiKey);
         $request = $request->withHeader('X-App-Access-Sig', $signature);
         $request = $request->withHeader('X-App-Access-Ts', $time);
 
