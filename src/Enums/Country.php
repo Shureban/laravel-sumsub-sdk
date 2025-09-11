@@ -195,6 +195,7 @@ enum Country: string
     case REU = 'REU';
     case ROU = 'ROU';
     case RUS = 'RUS';
+    case RKS = 'RKS';
     case RWA = 'RWA';
     case SAU = 'SAU';
     case SDN = 'SDN';
