@@ -4,10 +4,11 @@ namespace Shureban\LaravelSumsubSdk\Enums;
 
 enum ReviewStatus: string
 {
-    case Init       = 'init';
-    case Pending    = 'pending';
-    case Prechecked = 'prechecked';
-    case Queued     = 'queued';
-    case Completed  = 'completed';
-    case OnHold     = 'onHold';
+    case Init         = 'init';
+    case Pending      = 'pending';
+    case Prechecked   = 'prechecked';
+    case Queued       = 'queued';
+    case Completed    = 'completed';
+    case AwaitingUser = 'awaitingUser';
+    case OnHold       = 'onHold';
 }
