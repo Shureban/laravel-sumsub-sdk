@@ -12,6 +12,7 @@ class CompanyInfo
     public string   $legalAddress       = "";
     public string   $phone              = "";
     public string   $website            = "";
+    public string   $postalAddress      = "";
     /** @var Beneficiary[] $beneficiaries */
     public array $beneficiaries = [];
 }
