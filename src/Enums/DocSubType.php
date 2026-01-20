@@ -4,6 +4,7 @@ namespace Shureban\LaravelSumsubSdk\Enums;
 
 enum DocSubType: string
 {
-    case FrontSide = 'FRONT_SIDE';
-    case BackSide  = 'BACK_SIDE';
+    case FrontSide           = 'FRONT_SIDE';
+    case BackSide            = 'BACK_SIDE';
+    case ShareholderRegistry = 'SHAREHOLDER_REGISTRY';
 }
