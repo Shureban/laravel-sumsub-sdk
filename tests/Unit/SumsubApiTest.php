@@ -82,7 +82,7 @@ class SumsubApiTest extends TestCase
     {
         $request  = new GetApplicantDataRequest('user-42', 'abc123');
         $previous = new ClientException('Not Found', new Request('GET', '/x'), new Response(404));
-        $this->client->method('getApplicantData')->willThrowException($previous);
+        $this->client->expects($this->once())->method('getApplicantData')->willThrowException($previous);
 
         try {
             $this->api->getApplicantData($request);
@@ -96,7 +96,7 @@ class SumsubApiTest extends TestCase
     public function testGetApplicantDataRethrowsOtherHttpErrors(): void
     {
         $error = new ServerException('Server Error', new Request('GET', '/x'), new Response(500));
-        $this->client->method('getApplicantData')->willThrowException($error);
+        $this->client->expects($this->once())->method('getApplicantData')->willThrowException($error);
 
         try {
             $this->api->getApplicantData(new GetApplicantDataRequest('user-42'));
@@ -110,7 +110,7 @@ class SumsubApiTest extends TestCase
     public function testGetApplicantDataRethrowsConnectErrors(): void
     {
         $error = new ConnectException('Connection refused', new Request('GET', '/x'));
-        $this->client->method('getApplicantData')->willThrowException($error);
+        $this->client->expects($this->once())->method('getApplicantData')->willThrowException($error);
 
         $this->expectException(ConnectException::class);
 
@@ -131,7 +131,7 @@ class SumsubApiTest extends TestCase
     public function testChangingTopLevelInfoNotFound(): void
     {
         $request = new ChangingTopLevelInfoRequest('abc123');
-        $this->client->method('changingTopLevelInfo')->willThrowException(new ClientException('Not Found', new Request('PATCH', '/x'), new Response(404)));
+        $this->client->expects($this->once())->method('changingTopLevelInfo')->willThrowException(new ClientException('Not Found', new Request('PATCH', '/x'), new Response(404)));
 
         $this->expectException(ApplicantNotFoundException::class);
         $this->expectExceptionMessage('Applicant not found. ApplicantId: abc123. ExternalUserId: ');
@@ -141,7 +141,7 @@ class SumsubApiTest extends TestCase
 
     public function testChangingTopLevelInfoRethrowsOtherHttpErrors(): void
     {
-        $this->client->method('changingTopLevelInfo')->willThrowException(new ClientException('Bad Request', new Request('PATCH', '/x'), new Response(400)));
+        $this->client->expects($this->once())->method('changingTopLevelInfo')->willThrowException(new ClientException('Bad Request', new Request('PATCH', '/x'), new Response(400)));
 
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(400);
@@ -162,7 +162,7 @@ class SumsubApiTest extends TestCase
 
     public function testResetApplicantNotFound(): void
     {
-        $this->client->method('resetApplicant')->willThrowException(new ClientException('Not Found', new Request('POST', '/x'), new Response(404)));
+        $this->client->expects($this->once())->method('resetApplicant')->willThrowException(new ClientException('Not Found', new Request('POST', '/x'), new Response(404)));
 
         $this->expectException(ApplicantNotFoundException::class);
         $this->expectExceptionCode(404);
@@ -172,7 +172,7 @@ class SumsubApiTest extends TestCase
 
     public function testResetApplicantRethrowsOtherHttpErrors(): void
     {
-        $this->client->method('resetApplicant')->willThrowException(new ServerException('Server Error', new Request('POST', '/x'), new Response(503)));
+        $this->client->expects($this->once())->method('resetApplicant')->willThrowException(new ServerException('Server Error', new Request('POST', '/x'), new Response(503)));
 
         $this->expectException(ServerException::class);
         $this->expectExceptionCode(503);
@@ -182,7 +182,7 @@ class SumsubApiTest extends TestCase
 
     public function testInvalidJsonResponseThrowsParseJsonException(): void
     {
-        $this->client->method('createAccessToken')->willReturn('<html>Bad Gateway</html>');
+        $this->client->expects($this->once())->method('createAccessToken')->willReturn('<html>Bad Gateway</html>');
 
         $this->expectException(ParseJsonException::class);
 
