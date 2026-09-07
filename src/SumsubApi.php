@@ -68,7 +68,7 @@ class SumsubApi
         catch (GuzzleException $e) {
             match ($e->getCode()) {
                 Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
-                default                  => throw new $e,
+                default                  => throw $e,
             };
         }
 
@@ -91,7 +91,7 @@ class SumsubApi
         catch (GuzzleException $e) {
             match ($e->getCode()) {
                 Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
-                default                  => throw new $e,
+                default                  => throw $e,
             };
         }
 
@@ -114,7 +114,7 @@ class SumsubApi
         catch (GuzzleException $e) {
             match ($e->getCode()) {
                 Response::HTTP_NOT_FOUND => throw new ApplicantNotFoundException($request, $e->getCode(), $e->getPrevious()),
-                default                  => throw new $e,
+                default                  => throw $e,
             };
         }
 

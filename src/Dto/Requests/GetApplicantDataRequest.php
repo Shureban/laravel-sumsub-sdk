@@ -13,7 +13,7 @@ class GetApplicantDataRequest extends SumsubRequest implements ApplicantRequest
      * @param string      $externalUserId
      * @param string|null $applicantId
      */
-    public function __construct(string $externalUserId, string $applicantId = null)
+    public function __construct(string $externalUserId, ?string $applicantId = null)
     {
         $this->externalUserId = $externalUserId;
         $this->applicantId    = $applicantId;
