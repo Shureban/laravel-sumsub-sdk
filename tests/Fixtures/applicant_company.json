@@ -1,0 +1,58 @@
+{
+  "id": "6a1b2c3d4e5f60718293a4b5",
+  "createdAt": "2024-06-01 08:00:00",
+  "createdBy": "api",
+  "key": "TESTKEY",
+  "clientId": "acme_corp",
+  "inspectionId": "6a1b2c3d4e5f60718293a4b6",
+  "externalUserId": "company-7",
+  "applicantPlatform": "API",
+  "type": "company",
+  "email": null,
+  "phone": null,
+  "fixedInfo": {
+    "companyInfo": {
+      "companyName": "ACME LTD",
+      "registrationNumber": "12345678",
+      "country": "GBR",
+      "legalAddress": "1 Main St, London",
+      "phone": "+441234567890",
+      "website": "https://acme.example",
+      "postalAddress": "PO Box 1, London",
+      "beneficiaries": [
+        {
+          "applicantId": "ben-1",
+          "positions": ["director", "shareholder"],
+          "type": "director",
+          "inRegistry": true,
+          "imageIds": ["img-1", "img-2"],
+          "shareSize": 51.5,
+          "applicant": {"id": "ben-1", "externalUserId": "person-1"}
+        },
+        {
+          "applicantId": "ben-2",
+          "type": "ubo"
+        }
+      ]
+    }
+  },
+  "requiredIdDocs": {
+    "docSets": [
+      {
+        "idDocSetType": "COMPANY",
+        "types": ["COMPANY_DOC"],
+        "subTypes": ["SHAREHOLDER_REGISTRY"]
+      }
+    ]
+  },
+  "review": {
+    "reviewId": "rev-2",
+    "attemptId": "att-2",
+    "attemptCnt": 1,
+    "levelName": "basic-kyb-level",
+    "createDate": "2024-06-01 08:01:00",
+    "reviewStatus": "awaitingUser",
+    "reviewResult": null
+  },
+  "inspectionMetadata": []
+}

@@ -1,45 +1,52 @@
 {
-  "name": "shureban/laravel-sumsub-sdk",
-  "description": "API SDK for Sumsub (https://sumsub.com)",
-  "keywords": [
-    "sumsub",
-    "sumsub.com",
-    "sdk",
-    "laravel",
-    "shureban"
-  ],
-  "type": "laravel-package",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Shureban",
-      "email": "Shureban@gmail.com",
-      "role": "Developer"
+    "name": "shureban/laravel-sumsub-sdk",
+    "description": "API SDK for Sumsub (https://sumsub.com)",
+    "keywords": [
+        "sumsub",
+        "sumsub.com",
+        "sdk",
+        "laravel",
+        "shureban"
+    ],
+    "type": "laravel-package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shureban",
+            "email": "Shureban@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "version": "2.3.0",
+    "autoload": {
+        "psr-4": {
+            "Shureban\\LaravelSumsubSdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Shureban\\LaravelSumsubSdk\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.5",
+        "shureban/laravel-object-mapper": "^2.0"
+    },
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shureban\\LaravelSumsubSdk\\SumsubServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "laravel/framework": "^10.0|^11.0|^12.0",
+        "phpunit/phpunit": "^10.5|^11.0"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
-  ],
-  "minimum-stability": "dev",
-  "version": "2.2.6",
-  "autoload": {
-    "psr-4": {
-      "Shureban\\LaravelSumsubSdk\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Shureban\\LaravelSumsubSdk\\Tests\\": "tests/"
-    }
-  },
-  "require": {
-    "php": "^8.1",
-    "guzzlehttp/guzzle": "^7.5",
-    "shureban/laravel-object-mapper": "^1.1"
-  },
-  "prefer-stable": true,
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Shureban\\LaravelSumsubSdk\\SumsubServiceProvider"
-      ]
-    }
-  }
 }

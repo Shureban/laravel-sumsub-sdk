@@ -1,0 +1,150 @@
+{
+  "id": "5f0b6f2b1b7b3f0001a1b2c3",
+  "createdAt": "2024-05-10 12:34:56",
+  "createdBy": "service-account",
+  "key": "TESTKEY",
+  "clientId": "acme_corp",
+  "inspectionId": "5f0b6f2b1b7b3f0001a1b2c4",
+  "externalUserId": "user-42",
+  "sourceKey": "web",
+  "email": "john@example.com",
+  "phone": "+380501234567",
+  "lang": "en",
+  "applicantPlatform": "API",
+  "ipCountry": "UKR",
+  "authCode": "auth-123",
+  "type": "individual",
+  "info": {
+    "firstName": "John",
+    "firstNameEn": "John",
+    "lastName": "Doe",
+    "lastNameEn": "Doe",
+    "dob": "1990-01-15",
+    "country": "UKR",
+    "addresses": [
+      {
+        "country": "UKR",
+        "postCode": "01001",
+        "town": "Київ",
+        "townEn": "Kyiv",
+        "street": "Хрещатик 1",
+        "streetEn": "Khreshchatyk 1",
+        "subStreet": "корп. 2",
+        "subStreetEn": "bldg. 2",
+        "state": "Київська",
+        "stateEn": "Kyiv",
+        "formattedAddress": "Khreshchatyk 1, Kyiv, 01001, Ukraine",
+        "buildingName": "Tower",
+        "flatNumber": "7",
+        "buildingNumber": "1"
+      }
+    ],
+    "idDocs": [
+      {
+        "idDocType": "PASSPORT",
+        "country": "UKR",
+        "firstName": "John",
+        "lastName": "Doe",
+        "number": "AB123456",
+        "validUntil": "2030-01-01"
+      },
+      {
+        "idDocType": "UTILITY_BILL",
+        "country": "POL"
+      }
+    ]
+  },
+  "fixedInfo": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "middleName": "Michael",
+    "firstNameEn": "John",
+    "lastNameEn": "Doe",
+    "middleNameEn": "Michael",
+    "legalName": "John M. Doe",
+    "gender": "M",
+    "dob": "1990-01-15",
+    "placeOfBirth": "Kyiv",
+    "countryOfBirth": "UKR",
+    "stateOfBirth": "Kyiv",
+    "country": "UKR",
+    "nationality": "POL",
+    "tin": "1234567890",
+    "addresses": [
+      {
+        "country": "POL",
+        "town": "Warsaw",
+        "street": "Marszałkowska 1"
+      }
+    ]
+  },
+  "agreement": {
+    "createdAt": "2024-05-10 12:35:00",
+    "acceptedAt": "2024-05-10 12:35:10",
+    "source": "WebSDK",
+    "link": "https://sumsub.com/consent",
+    "content": {"version": 9},
+    "targets": ["constConsentEn_v9"],
+    "recordIds": ["rec-1", "rec-2"]
+  },
+  "requiredIdDocs": {
+    "excludedCountries": ["RUS", "BLR"],
+    "docSets": [
+      {
+        "idDocSetType": "IDENTITY",
+        "types": ["PASSPORT", "ID_CARD"],
+        "subTypes": ["FRONT_SIDE", "BACK_SIDE"],
+        "videoRequired": "disabled",
+        "fields": [
+          {"name": "firstName", "required": true, "prefill": true},
+          {"name": "lastName", "required": true}
+        ],
+        "customFields": [
+          {"name": "customField1", "required": false, "immutableIfPresent": true}
+        ]
+      },
+      {
+        "idDocSetType": "COMPANY",
+        "types": ["COMPANY_DOC"],
+        "subTypes": ["SHAREHOLDER_REGISTRY"]
+      }
+    ]
+  },
+  "metadata": [
+    {"key": "plan", "value": "premium"},
+    {"key": "source", "value": "landing"}
+  ],
+  "review": {
+    "reviewId": "rev-1",
+    "attemptId": "att-1",
+    "attemptCnt": 2,
+    "elapsedSincePendingMs": 1200,
+    "elapsedSinceQueuedMs": 1300,
+    "reprocessing": false,
+    "levelName": "basic-kyc-level",
+    "createDate": "2024-05-10 12:36:00",
+    "reviewDate": "2024-05-10 12:40:00",
+    "reviewResult": {
+      "reviewAnswer": "RED",
+      "rejectLabels": ["UNSATISFACTORY_PHOTOS", "BAD_SELFIE"],
+      "reviewRejectType": "RETRY",
+      "moderationComment": "Please retake the photo.",
+      "clientComment": "Photo is blurry."
+    },
+    "reviewStatus": "completed",
+    "priority": 0
+  },
+  "questionnaires": [
+    {
+      "id": "kyc_questionnaire",
+      "score": 0.5,
+      "sections": {
+        "personal": {"items": {"income": {"value": "1000"}}},
+        "employment": {"items": {"employer": {"value": "ACME"}}}
+      }
+    }
+  ],
+  "inspectionMetadata": [
+    {"foo": "bar"}
+  ]
+}
